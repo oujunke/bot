@@ -1,4 +1,5 @@
-﻿using System;
+/*Copyright 2017 Eric Yang*/
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
