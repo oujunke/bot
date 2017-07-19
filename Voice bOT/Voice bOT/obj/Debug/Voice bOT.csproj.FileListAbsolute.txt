@@ -1,0 +1,15 @@
+c:\users\bob\documents\visual studio 2015\Projects\Voice bOT\Voice bOT\bin\Debug\Voice bOT.exe.config
+c:\users\bob\documents\visual studio 2015\Projects\Voice bOT\Voice bOT\obj\Debug\Voice bOT.csprojResolveAssemblyReference.cache
+c:\users\bob\documents\visual studio 2015\Projects\Voice bOT\Voice bOT\obj\Debug\Voice_bOT.Form1.resources
+c:\users\bob\documents\visual studio 2015\Projects\Voice bOT\Voice bOT\obj\Debug\Voice_bOT.Properties.Resources.resources
+c:\users\bob\documents\visual studio 2015\Projects\Voice bOT\Voice bOT\obj\Debug\Voice bOT.csproj.GenerateResource.Cache
+c:\users\bob\documents\visual studio 2015\Projects\Voice bOT\Voice bOT\bin\Debug\Voice bOT.exe
+c:\users\bob\documents\visual studio 2015\Projects\Voice bOT\Voice bOT\bin\Debug\Voice bOT.pdb
+c:\users\bob\documents\visual studio 2015\Projects\Voice bOT\Voice bOT\obj\Debug\Voice bOT.exe
+c:\users\bob\documents\visual studio 2015\Projects\Voice bOT\Voice bOT\obj\Debug\Voice bOT.pdb
+C:\Users\Bob\documents\visual studio 2015\Projects\Voice bOT\Voice bOT\bin\Debug\WindowsMicrophoneMuteLibrary.dll
+C:\Users\Bob\documents\visual studio 2015\Projects\Voice bOT\Voice bOT\bin\Debug\CoreAudioApi.dll
+C:\Users\Bob\documents\visual studio 2015\Projects\Voice bOT\Voice bOT\bin\Debug\MixerNativeLibrary.dll
+C:\Users\Bob\documents\visual studio 2015\Projects\Voice bOT\Voice bOT\bin\Debug\WindowsMicrophoneMuteLibrary.pdb
+C:\Users\Bob\documents\visual studio 2015\Projects\Voice bOT\Voice bOT\bin\Debug\CoreAudioApi.pdb
+C:\Users\Bob\documents\visual studio 2015\Projects\Voice bOT\Voice bOT\bin\Debug\MixerNativeLibrary.pdb
