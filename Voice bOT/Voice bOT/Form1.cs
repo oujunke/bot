@@ -1,5 +1,4 @@
-/*Copyright 2017 Eric Yang*/
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -14,6 +13,7 @@ using System.Diagnostics;
 using System.IO.Ports;
 using System.Xml;
 using System.Media;
+using System.Net;
 
 namespace Voice_Bot
 {
@@ -26,9 +26,12 @@ namespace Voice_Bot
         Boolean isitonce = false;
         SoundPlayer player = new SoundPlayer();
         DateTime bfr = new DateTime();
-        
+        WebClient w = new WebClient();
+
         SerialPort port = new SerialPort("COM3", 9600, Parity.None,
             8, StopBits.One);
+
+        
 
         String temp;
         String condition;
@@ -52,7 +55,10 @@ namespace Voice_Bot
                 "whats the temperature",
                 "pink fluffy encrypted unicorns",
                 "thank you", "bot",
-                "please play super secret music"});
+                "please play super secret music",
+                "minimize", "maximize", "tell me a joke",
+                "unminimize", "unmaximize", "play", "pause",
+                "spotify", "next", "last"});
 
             Grammar gr = new Grammar(new GrammarBuilder(list));
 
@@ -70,9 +76,7 @@ namespace Voice_Bot
             }
             catch { return; }
 
-            s.SelectVoiceByHints(VoiceGender.Male);
-
-            s.Speak("Hello");
+            s.SelectVoiceByHints(VoiceGender.Female);
 
             InitializeComponent();
         }
@@ -81,8 +85,15 @@ namespace Voice_Bot
         {
             String query = String.Format("https://query.yahooapis.com/v1/public/yql?q=select * from weather.forecast where woeid in (select woeid from geo.places(1) where text='allen, tx')&format=xml&env=store%3A%2F%2Fdatatables.org%2Falltableswithkeys");
             XmlDocument wData = new XmlDocument();
-            wData.Load(query);
-
+            try
+            {
+                wData.Load(query);
+            }
+            catch
+            {
+                MessageBox.Show("No Internet Connection");
+                return "No internet";
+            }
             XmlNamespaceManager manager = new XmlNamespaceManager(wData.NameTable);
             manager.AddNamespace("yweather", "http://xml.weather.yahoo.com/ns/rss/1.0");
 
@@ -90,7 +101,8 @@ namespace Voice_Bot
             XmlNodeList nodes = wData.SelectNodes("query/results/channel");
             try
             {
-                temp = channel.SelectSingleNode("item").SelectSingleNode("yweather:condition", manager).Attributes["temp"].Value;
+                int rawtemp = int.Parse(channel.SelectSingleNode("item").SelectSingleNode("yweather:condition", manager).Attributes["temp"].Value);
+                temp = (rawtemp - 32) * 5/9 + "" ;
                 condition = channel.SelectSingleNode("item").SelectSingleNode("yweather:condition", manager).Attributes["text"].Value;
                 if (input == "temp")
                 {
@@ -114,7 +126,7 @@ namespace Voice_Bot
         {
             if (pockey == true)
             {
-                Process.Start(@"C:\Users\Bob\Documents\Visual Studio 2015\Projects\Voice bOT\Voice bOT\bin\Debug\Voice bOT.exe");
+                Process.Start("Voice Bot.exe");
                 Environment.Exit(0);
             }
         }
@@ -144,6 +156,7 @@ namespace Voice_Bot
                     }
                 }
             }
+            procs = null;
         }
 
         public void say(String h)
@@ -256,12 +269,53 @@ namespace Voice_Bot
                     {
                         say(greetings_action());  //What it says...
                     }
+                    
+                    if(r == "tell me a joke")
+                    {
+                        say(w.DownloadString("http://api.yomomma.info/").Replace("\"", "").Replace(":", "").Replace("joke", ""));
+                    }
 
                     if (r == "please play super secret music")
                     {
                         say("Playing");
                         player.SoundLocation = "C:\\Users\\Bob\\Music\\videoplayback.wav";
                         player.Play();
+                    }
+
+                    if (r == "minimize")
+                    {
+                        this.WindowState = FormWindowState.Minimized;
+                    }
+
+                    if (r == "unminimize" || r == "unmaximize")
+                    {
+                        this.WindowState = FormWindowState.Normal;
+                    }
+
+                    if (r == "maximize")
+                    {
+                        this.WindowState = FormWindowState.Maximized;
+                    }
+
+                    if (r == "spotify")
+                    {
+                        Process.Start(@"C:\Users\Bob\AppData\Roaming\Spotify\Spotify.exe");
+                        restart();
+                    }
+
+                    if (r == "play" || r == "pause")
+                    {
+                        SendKeys.Send(" ");
+                    }
+
+                    if (r == "next")
+                    {
+                        SendKeys.Send("^{RIGHT}");
+                    }
+
+                    if (r == "last")
+                    {
+                        SendKeys.Send("^{LEFT}");
                     }
 
                     if (r == "thank you") //When you say...
@@ -314,7 +368,8 @@ namespace Voice_Bot
 
                     if (r == "open google") //When you say...
                     {
-                        Process.Start("http://google.com");  //What it says...
+                        Process.Start("http://google.com");
+                        restart();//What it says...
                     }
 
                     /*if (r == "open bing") //When you say...
@@ -354,6 +409,7 @@ namespace Voice_Bot
                         try
                         {
                             Process.Start(@"C:\Program Files (x86)\Minecraft\MinecraftLauncher.exe");
+                            restart();
                         }
                         catch
                         {

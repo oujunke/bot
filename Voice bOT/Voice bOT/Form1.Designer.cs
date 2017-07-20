@@ -1,5 +1,4 @@
-/*Copyright 2017 Eric Yang*/
-namespace Voice_Bot
+﻿namespace Voice_Bot
 {
     partial class Form1
     {
